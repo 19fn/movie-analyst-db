@@ -8,4 +8,6 @@ EXPOSE 3306
 
 WORKDIR /ddbb
 
+RUN apt-get update && apt-get install curl -y
+
 COPY . .
