@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+        movie-analyst-ui:
+                build: ./db
+                image: ${DB_IMAGE}
+                
+                environment:
+                        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                        - MYSQL_DATABASE=${MYSQL_DATABASE}
+                env_file:
+                        - .env
+                container_name: ${DB_CONTAINER}
+                ports:
+                        - "3306:3306"
+                restart: unless-stopped
+                
+                healthcheck:
+                        test: curl --fail http://localhost:3000 || exit 1
+                        interval: 60s
+                        retries: 5
+                        start_period: 20s
+                        timeout: 10s
